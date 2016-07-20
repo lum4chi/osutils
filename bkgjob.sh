@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
 # Copyright (C) 2016 Francesco Lumachi <francesco.lumachi@gmail.com>
+
 cmd="$@"        # Command to launch in background with args
 
 # If "sudo" is used for 1st time, need to call a dummy sudo (if not, sudo runned
