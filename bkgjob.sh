@@ -5,7 +5,7 @@
 # If no args provided, show usage
 if [[ $# -eq 0 ]]
 then
-    echo 'Usage: bkgjob <command -args to instantiate in background>'
+    echo 'Usage: bkgjob <command +args to instantiate in background>'
     exit 0
 fi
 
