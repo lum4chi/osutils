@@ -2,6 +2,13 @@
 #
 # Copyright (C) 2016 Francesco Lumachi <francesco.lumachi@gmail.com>
 
+# If no args, show usage
+if [[ $# -eq 0 ]]
+then
+    echo 'Usage: bkgjob <command plus args to instantiate>'
+    exit 0
+fi
+
 cmd="$@"        # Command to launch in background with args
 
 # If "sudo" is used for 1st time, need to call a dummy sudo (if not, sudo runned
