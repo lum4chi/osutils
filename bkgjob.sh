@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2016 Francesco Lumachi <francesco.lumachi@gmail.com>
 
-# If no args, show usage
+# If no args provided, show usage
 if [[ $# -eq 0 ]]
 then
     echo 'Usage: bkgjob <command plus args to instantiate>'
