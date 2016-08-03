@@ -20,8 +20,8 @@ def unpack_TAR(path, tname):
 def unpack_GZ(path, gname):
     gpathname = os.path.join(path, gname)
     outname = os.path.join(path, os.path.splitext(gname)[0])
-    with gzip.open(gpathname, 'rb') as gfile, open(outname, 'wb'):
-        outname.write(gfile.read())
+    with gzip.open(gpathname, 'rb') as gfile, open(outname, 'wb') as outfile:
+        outfile.write(gfile.read())
 
 # Default
 delete_unpacked = False
@@ -35,7 +35,7 @@ for opt, arg in opts:
 for path, _, files in os.walk('.'):
     # Filtra solo i .gz
     gzfiles = [f for f in files if os.path.splitext(f)[1] == '.gz']
-    # TODOPRENDE ANCHE I GZ!!
+    # TODO PRENDE ANCHE I GZ!!
     #tarfiles = [f for f in files if os.path.splitext(f)[1] == '.gz']
     for gname in gzfiles:
         print 'Unpacking {}'.format(os.path.join(path, gname))
