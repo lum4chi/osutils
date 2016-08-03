@@ -23,7 +23,13 @@ def unpack_GZ(path, gname):
     with gzip.open(gpathname, 'rb') as gfile, open(outname, 'wb') as outfile:
         outfile.write(gfile.read())
 
-# Default
+def targz_filter(files):
+    files = [f for f in files if os.path.splitext(f)[1] == '.gz']
+    tarfiles = [f for f in files if '.tar.' in f]
+    gzfiles = [f for f in files if '.tar.' not in f]
+    return tarfiles, gzfiles
+
+# Defaults
 delete_unpacked = False
 
 # Leggi argparse
@@ -34,19 +40,17 @@ for opt, arg in opts:
 # Cerca tutti i files
 for path, _, files in os.walk('.'):
     # Filtra solo i .gz
-    gzfiles = [f for f in files if os.path.splitext(f)[1] == '.gz']
-    # TODO PRENDE ANCHE I GZ!!
-    #tarfiles = [f for f in files if os.path.splitext(f)[1] == '.gz']
+    tarfiles, gzfiles = targz_filter(files)
     for gname in gzfiles:
         print 'Unpacking {}'.format(os.path.join(path, gname))
         unpack_GZ(path, gname)
         if delete_unpacked:
             print 'Deleting {}'.format(os.path.join(path, gname))
             os.remove(os.path.join(path, gname))
-    # for tname in tarfiles:
-    #     print 'Unpacking {}'.format(os.path.join(path, tname))
-    #     unpack_TAR(path, tname)
-    #     if delete_unpacked:
-    #         print 'Deleting {}'.format(os.path.join(path, tname))
-    #         os.remove(os.path.join(path, tname))
+    for tname in tarfiles:
+        print 'Unpacking {}'.format(os.path.join(path, tname))
+        unpack_TAR(path, tname)
+        if delete_unpacked:
+            print 'Deleting {}'.format(os.path.join(path, tname))
+            os.remove(os.path.join(path, tname))
 print 'Fatto!'
