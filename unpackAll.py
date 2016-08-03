@@ -11,10 +11,13 @@ import tarfile, os, getopt, sys
 def unpack_GZ(path, tname):
     tpathname = os.path.join(path, tname)
     tfile = tarfile.open(tpathname, 'r:gz')
-    members = tfile.getmembers()
-    # Per ogni file, appiattisci la directory di decompressione
-    for m in members:
-        m.name = os.path.basename(m.name)
+    try:    # potrebbe non avere header
+        members = tfile.getmembers()
+        # Per ogni file, appiattisci la directory di decompressione
+        for m in members:
+            m.name = os.path.basename(m.name)
+    except ReadError:
+        pass
     tfile.extractall(path)
     tfile.close()
 
@@ -28,7 +31,7 @@ for opt, arg in opts:
 
 # Cerca tutti i files
 for path, _, files in os.walk('.'):
-    # Filtra solo i .gz
+    # Filtra solo i .tar.gz
     tarfiles = [f for f in files if os.path.splitext(f)[1] == '.gz']
     for tname in tarfiles:
         print 'Unpacking {}'.format(os.path.join(path, tname))
