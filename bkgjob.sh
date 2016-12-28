@@ -26,6 +26,7 @@ if [[ $1 == "python" ]]
 then
   cmd=${cmd/python/python -u}
 fi
+export PYTHONUNBUFFERED=1 # for <script>.py
 
 # Execute in background, redirect output(1) and error(2) to <cmd>.log file
 nohup $cmd 1>${cmd// /_}.log 2>&1 &
